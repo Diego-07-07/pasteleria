@@ -1,0 +1,67 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+#bg-video{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit:cover;
+    z-index: -1;
+    filter: brightness(0.7);
+}
+
+.contenedor{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100%vh;
+color:white;
+}
+
+.branding img {
+width: 95%;
+}
+.brading span{
+font-family:'Pacifico' cursive;
+font-size:4.5rem;
+}
+
+.brading p {
+    margin-top: 1rem;
+    font-size:1.2rem;
+    letter-spacing:2px;
+    text-align: center;
+}
+.menu{
+    background:white;
+    padding: 2rem 3rem;
+    border-radius:30px;
+    color:black;
+    height:70vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+.menu ul{
+list-style:none ;
+display:flex;
+flex-direction:column;
+gap:4rem;
+}
+.menu a{
+text-decoration:none;
+color:black;
+font-size:1rem;
+transition:color 0.35;
+}
+
+.menu a:hover{
+color:#e621bb;
+}

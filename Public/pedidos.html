@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/pastel.css">
+
+    <title>Pedidos</title>
+</head>
+<body>
+
+    <!--menu de navegacion-->
+   <center>
+    <div class="menu">
+    <a href="principal.html">Menu Principal</a>
+    <a href="empleados.html">Empleados</a>
+    <a href="pasteles.html">Pasteles</a>
+    <a href="Index.html">Cerrar Sesión</a>
+    </div></center>
+
+    <center><h2>Gestión de Pedidos</h2></center>
+
+    <div class="agregar-Pedido-container">
+        <h3>Agregar Pedido</h3>
+        <form id="formPedido" class="form-horizontal">
+            <input type="text" id="cliente" placeholder="Nombre-cliente" required>
+            <input type="text" id="Producto" placeholder="Producto" required min="0">
+            <button type="submit">Agregar Pedido</button>
+        </form>
+    </div>
+    <!--Tabla de Pasteles Agregados-->
+
+    <div class="tabla-container">
+        <table id="tablaPedido">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Pedido</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        //Función Para Cargar y Mostrar Pasteles
+        async function cargarPedido(){
+            const res= await fetch('/api/pedidos');
+            const pedidos= await res.json();
+            const tbody= document.querySelector('#tablaPedido tbody');
+            tbody.innerHTML= pedidos.map (p => `
+            <tr>
+                <td>${p.cliente}</td>
+                <td>${p.producto}</td>
+                <td>
+                    <button class="eliminarPedido"
+                    onclick="eliminarPedido('${p._id}')">Eliminar
+                    </button>
+                </td>
+                </tr>
+            `).join('');
+        }
+
+        //Función Para eliminar Pastel preguntando al usuario
+        async function eliminarPedido(id) {
+            const confirmacion = confirm("¿Estás seguro de eliminar ?");
+            if (!confirmacion) return ;
+              await fetch(`/api/pedidos/${id}`, {method: 'DELETE' });
+            cargarPedido();
+        }
+
+        //Manejar el evento SUBMIT
+        document.getElementById('formPedido').addEventListener('submit'  ,async(e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('cliente').value;
+            const producto = document.getElementById('producto').value;
+            await fetch('/api/pedidos' , {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body:JSON.stringify({cliente: nombre, producto })
+            });
+            document.getElementById('formPedido').reset();
+            cargarPedido();
+        }) ;
+        cargarPedido();
+        window.eliminarPedido = eliminarPedido;
+    </script>
+</body>
+</html>

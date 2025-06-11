@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="CSS/Regis.css">
+</head>
+<body>
+    <!--Formularo de registro de usuario-->
+ <div class="principal">
+
+    <div class="formulario">
+        <form id="registroForm">
+        <h2>Registrarte aqui</h2>
+        <!--Campo para el nombre del ususrio-->
+        <label for="nombre">Nombre:</label>
+        <br>
+        <input type="text" id="nombre" required><br>
+        <br>
+        <!--Campo para el correo electronico-->
+        <label for="email">Correo electronico:</label>
+        <br>
+        <input type="email" id="email" required><br>
+        <br>
+        <!--Campo para el contraseña-->
+        <label for="password">Contraseña:</label>
+        <br>
+        <input type="password" id="password" required><br>
+        <br><br>
+        <!--Boton para enviar el formulario de registro-->
+       <center> <button  type="submit">Registrase</button></center>
+        </form>
+
+        <!--Boton para regresar a la pagina de inicio de secion-->
+      <center>  <button class="btn" onclick="window.location.href='Index.html'">Regresar</button></center>
+    </div>
+    <div class="imagen"></div>
+ </div>
+<script>
+// Agrega un listener al formulario para manejar el evento submit
+document.getElementById('registroForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Evita que recargue la página
+
+    // Obtiene los valores ingresados por el usuario
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Realiza una petición POST al servidor con los datos del usuario
+    const res = await fetch('/registro', {
+        method: 'POST', // Método HTTP
+        headers: {
+            'Content-Type': 'application/json' // Indica que se envía JSON
+        },
+        body: JSON.stringify({ nombre, email, password }) // Convierte los datos a JSON
+    });
+
+    // Espera la respuesta del servidor en texto
+    const msg = await res.text();
+    alert(msg); // Muestra el mensaje recibido (éxito o error)
+});
+</script>
+</body>
+</html>
