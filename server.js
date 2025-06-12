@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 // crear una instancia de la aplicación express
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // habilitar CORS para permitir peticiones
 app.use(cors());
@@ -16,14 +16,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // detectar archivos estáticos en la carpeta public
-app.use(express.static('public'));
+app.use(express.static('Público'));
 
 // conectar a la base de datos de MongoDB
-mongoose.connect('mongodb://localhost:27017/Pasteleria', {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('Conectado a MongoDB'))
+.then(() => console.log('Conectado a MongoDBATLAS'))
 .catch(err => console.error(err));
 
 // Esquemas y modelos
